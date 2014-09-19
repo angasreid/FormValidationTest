@@ -2,99 +2,112 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
-	 </script>
+	<title>Form Validator</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script>
-
-	$(document).ready(function() {
+	$(document).ready(function(){
 		var username = "";
-		var userEmail ="";
+		var userEmail = "";
 		var emailAt;
 		var emailDot;
 		var userZipcode = "";
 		var userGender = "";
 		var f1, f2, f3, f4;
-
-		$("#submitBtn").click(function() {
+ 
+		$("#submitBtn").click(function(){
 			validateForm();
 		})
-
+ 
 		function validateForm(){
-			username = $("user-name").val();
+			username = $("#user-name").val();
 			userEmail = $("#user-email").val();
-
-			emailAt = userEmail.indexOf("@");
+			//checking for x >= 0
+			emailAt = userEmail.indexOf("@"); 
 			emailDot = userEmail.indexOf(".");
 			userZipcode = $("#user-zipcode").val();
 			userGender = $("#user-gender").val();
-
+ 
 			console.log("name: "+username);
-			console.log("Email: "+userEmail);
+			console.log("email: "+userEmail);
 			console.log("@: "+emailAt);
 			console.log(".: "+emailDot);
-			console.log("ZipCode: "+userZipcode);
-			console.log("Gender: "+userGender);
-
-			if(username != "") {
-				f1 =true;
-				//good
+			console.log("zipcode: "+userZipcode);
+			console.log("gender: "+userGender);
+ 
+			if(username != ""){
+				//great the name has data
+				f1 = true;
 			}else{
-				//alert to ask
+				//alert the user and ask for data
 				f1 = false;
 			}
-
-			if(userEmail !="") {
-				//check if valid
+ 
+			if(userEmail != ""){
+				//check if it's valid
 				if(emailAt != -1 && emailDot != -1){
 					//email is valid
-
-				}else {
+					f2 = true;
+				}else{
 					//email is invalid
+					f2 = false;
 				}
-			}else {
-				//ask for email
-			}
-
-			if(!isNaN(userZipcode) && userZipcode.length ==5) {
-				// alert("This is a #")
-			}else {
-				alert("This is not a valid Zipcode #")
-			}
-
-			if(userGender != "null") {
-				f4 = true;
-				//Good
 			}else{
-				f4 = false;
-				alert("Please choose a valid Gender")
+				//ask the user for an email
+				f2 = false;
 			}
-
+ 
+			if(!isNaN(userZipcode) && userZipcode.length == 5){
+				//alert("This is a correct zip code")
+				f3 = true;
+			}else{
+				//alert("This is not a correct zip code")
+				f3 = false;
+			}
+ 
+			if(userGender != "null"){
+				//There is an answer
+				f4 = true;
+			}else{
+				//Ask user for an answer
+				f4 = false;
+			}
+ 
+			if(f1 && f2 && f3 && f4){
+				//form validated
+				$("form").submit();
+			}else{
+				//form needs revisions
+				alert("Please make sure to fill in every field in the form")
+			}
+ 
+ 
+ 
+ 
+ 
 		}
-});
+	});
 	</script>
-
 </head>
-	<form action ="process.html" method="get">
-	    <input type="text" name="user-name" id="user-name" placeholder="Name"/>
-	    <br>
-	    <input type="text" name="user-email" id="user-email" placeholder="Email"/>
-	    <br>
-	    Zip Code:<br>
-	    <input type="text" name="user-zipcode" id="user-zipcode" maxLength="5"/>
-	    <br>
-	    <select name="user-gender" id="user-gender">
-	      <option value="null">Chose One</option>
-	      <option value="male">Male</option>
-	      <option value="female">Female</option>
-	      <option value="decline">Decline to Answer</option>
-	    </select>
-	    <br><br>
-	    <input type="button" name="submitBtn" id="submitBtn" value = "Submit Form"/>
-
-	</form>
-
 <body>
+	<form action="process.html" method="post">
+		<input type="text" name="user-name" id="user-name" placeholder="Please type your name" style="width:200px;"/>
+		<br>
+		<input type="text" name="user-email" id="user-email" placeholder="Please type your Email address" style="width:200px;"/>
+		<br>
+		Zip code:<br>
+		<input type="text" name="user-zipcode" id="user-zipcode" maxlength="5"  style="width:80px;"/>
+		<br>
+		Gender:
+		<br>
+		<select name="user-gender" id="user-gender">
+			<option value="null">Choose one</option>
+			<option value="male">Male</option>
+			<option value="female">Female</option>
+			<option value="decline">Decline to answer</option>
+		</select>
+		<br><br>
+		<input type="button" name="submitBtn" id="submitBtn" value="submit form"/>
+	</form>
 	
 </body>
 </html>
