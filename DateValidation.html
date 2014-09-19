@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+	 </script>
+</head>
+
+
+
+
+<body>
+	<form action="process" method="POST" id="form1">
+		<label for="text">Enter Date:</label>
+		<input type="text" name="date" id="date" placeholder="mm/dd/yyyy" >
+		<input type="button" id="btnSubmit" value="Submit">
+	</form>
+</body>
+
+<script type="text/javascript">	
+	$(document).ready(function(){
+
+		$("#btnSubmit").click(function() {
+			//var date= document.getElementById("date").value;
+			var date=$("#date").val();
+
+			var arrDate = date.split("/");
+			console.log(arrDate);
+			if(arrDate[0] < 13){
+				if(arrDate[1]<31) {
+					if(arrDate[2]<2015) {
+						alert("Great!")
+						return false;
+					}else {
+						alert("No Bueno. Re-Enter");
+						return false;
+					}
+				return false;
+				}
+			
+			}else {
+				alert('No Bueno. Re-Enter');
+			}
+		});
+
+	});
+
+</script>
+
+</html>
